@@ -1,0 +1,137 @@
+/* 부드러운 스크롤 (헤더 높이만큼 여백) */
+html {
+  scroll-behavior: smooth;
+}
+section[id] {
+  scroll-margin-top: 4rem;
+}
+
+/* 섹션 제목: 캡쳐처럼 굵고 크게 */
+.section-title {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+/* 태그 뱃지 (외곽선 알약) */
+.tag {
+  display: inline-block;
+  padding: 0.3rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(14, 14, 14, 0.2);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.dark .tag {
+  border-color: rgba(244, 241, 234, 0.25);
+}
+
+/* 카드 hover: 살짝 떠오름 */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover,
+.reveal.is-visible.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -20px rgba(14, 14, 14, 0.25);
+}
+
+/* 스크롤 등장 애니메이션 (script.js가 .is-visible 추가) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* 십자선 장식 (캡쳐의 타깃 아이콘) */
+.crosshair {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  pointer-events: none;
+}
+.crosshair::before,
+.crosshair::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+.crosshair::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+.crosshair::after {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+}
+.crosshair {
+  color: #0e0e0e;
+  border: 1px solid currentColor;
+  border-radius: 9999px;
+}
+.dark .crosshair {
+  color: #f4f1ea;
+}
+/* 어두운 섹션(Contact) 안의 십자선은 밝게 */
+#contact .crosshair {
+  color: rgba(244, 241, 234, 0.4);
+}
+
+/* 마퀴 (검은 띠 텍스트 흐름) */
+.marquee {
+  display: inline-block;
+  animation: marquee 30s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* 현재 섹션 네비 링크 강조 (script.js가 .active 추가) */
+.nav-link.active {
+  opacity: 1;
+  position: relative;
+}
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #2563eb, #7c3aed, #10b981);
+}
+.nav-link:not(.active) {
+  opacity: 0.6;
+}
+
+/* 모바일 메뉴 열림 상태 */
+#mobile-menu.open {
+  display: block;
+}
+
+/* 움직임을 줄이고 싶은 사용자 배려 */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .marquee {
+    animation: none;
+  }
+  .reveal,
+  .card-hover {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
